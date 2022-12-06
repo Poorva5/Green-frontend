@@ -106,7 +106,7 @@ const LoginForm = () => {
                         name="password"
                         control={control}
                         defaultValue=""
-                        render={({ field }) =>
+                        render={({ field }) => (
                             <TextField
                                 type="password"
                                 fullWidth
@@ -121,7 +121,7 @@ const LoginForm = () => {
                                     "& fieldset": { top: 0 },
                                 }}
                             />
-                        }
+                        )}
                     />
                 </StyledFormGroup>
                 <StyledButton>
