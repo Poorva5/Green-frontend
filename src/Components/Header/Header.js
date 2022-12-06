@@ -12,7 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import LoginModal from '../Auth/LoginModal';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import SignUpModal from '../Auth/SignupModal';
 
 const pages = ['Home', 'About Us', 'Contact Us'];
 const settings = ['Profile', 'Login', 'Sign up', 'Logout'];
@@ -20,6 +22,9 @@ const settings = ['Profile', 'Login', 'Sign up', 'Logout'];
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [openLogin, setOpenLogin] = React.useState(false);
+    const [openSignUp, setOpenSignUp] = React.useState(false)
+
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -35,6 +40,14 @@ function Navbar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const handleLogin = () => {
+        setOpenLogin(true)
+    }
+
+    const handleSignUp = () => {
+        setOpenSignUp(true)
+    }
 
     return (
         <AppBar position="static" sx={{ backgroundColor: '#045406' }}>
@@ -165,14 +178,23 @@ function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem key={""} onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">{settings[0]}</Typography>
+                            </MenuItem>
+                            <MenuItem key={""} onClick={handleLogin}>
+                                <Typography textAlign="center">{settings[1]}</Typography>
+                            </MenuItem>
+                            <MenuItem key={""} onClick={handleSignUp}>
+                                <Typography textAlign="center">{settings[2]}</Typography>
+                            </MenuItem>
+                            <MenuItem key={""} onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">{settings[3]}</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>
+                <LoginModal openLogin={openLogin} setOpenLogin={setOpenLogin} />
+                <SignUpModal openSignUp={openSignUp} setSignUpOpen={setOpenSignUp} />
             </Container>
         </AppBar>
     );
