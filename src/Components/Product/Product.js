@@ -17,13 +17,13 @@ const TitleDiv = styled('a')(({ theme, color = "#6065D8" }) => ({
 
 const Product = ({ product: { image, name, price, description, id }, index }) => {
 
-    console.log(name, image, price, description)
+    console.log(name, image, price, description, id)
 
     const navigate = useNavigate();
 
     return (
-        <Card sx={{ maxWidth: 369, marginRight: '16px' }}>
-            <CardActionArea>
+        <Card sx={{ maxWidth: 369, marginRight: '16px', marginBottom: '16px' }}>
+            <CardActionArea onClick={() => { navigate(`/detail/${id}`) }}>
                 <CardMedia
                     component="img"
                     height="461.25"

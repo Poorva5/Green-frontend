@@ -22,7 +22,7 @@ const Products = () => {
     }, [])
 
     return (
-        <div style={{ marginLeft: '150px', marginTop: '100px', display: 'flex' }}>
+        <div style={{ marginLeft: '150px', marginTop: '100px', display: 'flex', flexWrap: 'wrap' }}>
             {isLoading ? <h1>Loading</h1> : (
                 renderProductList(productList)
             )}

@@ -39,12 +39,12 @@ export const productSlice = createSlice({
     }
 })
 
-export const { setProducts } = productSlice.actions;
+export const { setProducts, setProduct } = productSlice.actions;
 
 export default productSlice.reducer;
 
 export function fetchProductList(data) {
-    return async function fetchProductThunk(
+    return async function fetchProductListThunk(
         dispatch
     ) {
         dispatch(setLoading());
@@ -56,6 +56,23 @@ export function fetchProductList(data) {
             dispatch(setLoading())
         }
         catch (err) {
+            dispatch(setLoading());
+        }
+    };
+}
+
+export function fetchProduct(id) {
+    return async function fetchProductThunk(
+        dispatch
+    ) {
+        dispatch(setLoading());
+        try {
+            const res = await apiWithoutToken.get(
+                `/api/product/detail/${id}`,
+            );
+            dispatch(setProduct(res.data))
+            dispatch(setLoading());
+        } catch (err) {
             dispatch(setLoading());
         }
     };
