@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,7 +17,6 @@ import LoginModal from '../Auth/LoginModal';
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import SignUpModal from '../Auth/SignupModal';
 
-const pages = ['Home', 'About Us', 'Contact Us'];
 const settings = ['Profile', 'Login', 'Sign up', 'Logout'];
 
 function Navbar() {
@@ -24,6 +24,7 @@ function Navbar() {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [openLogin, setOpenLogin] = React.useState(false);
     const [openSignUp, setOpenSignUp] = React.useState(false)
+    const navigate = useNavigate()
 
 
     const handleOpenNavMenu = (event) => {
@@ -49,6 +50,13 @@ function Navbar() {
         setOpenSignUp(true)
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        window.location.href = '/'
+    }
+
+    const token = localStorage.getItem('accessToken')
+
     return (
         <AppBar position="static" sx={{ backgroundColor: '#045406' }}>
             <Container maxWidth="xl">
@@ -58,7 +66,7 @@ function Navbar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        href='/'
                         sx={{
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
@@ -117,11 +125,15 @@ function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem key={""} onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Home</Typography>
+                            </MenuItem>
+                            <MenuItem key={""} onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">About us</Typography>
+                            </MenuItem>
+                            <MenuItem key={""} onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Contact us</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -144,15 +156,28 @@ function Navbar() {
                         GREEN
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+                        <Button
+                            key={""}
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Home
+                        </Button>
+                        <Button
+                            key={""}
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            About us
+                        </Button>
+                        <Button
+                            key={""}
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Contact us
+                        </Button>
+
                     </Box>
 
                     <LocalMallOutlinedIcon sx={{ fontSize: '35px', marginRight: '20px', cursor: 'pointer' }} />
@@ -178,18 +203,25 @@ function Navbar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            <MenuItem key={""} onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center">{settings[0]}</Typography>
-                            </MenuItem>
-                            <MenuItem key={""} onClick={handleLogin}>
-                                <Typography textAlign="center">{settings[1]}</Typography>
-                            </MenuItem>
-                            <MenuItem key={""} onClick={handleSignUp}>
-                                <Typography textAlign="center">{settings[2]}</Typography>
-                            </MenuItem>
-                            <MenuItem key={""} onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center">{settings[3]}</Typography>
-                            </MenuItem>
+                            {token ? (
+                                <>
+                                    <MenuItem key={""} onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">Profile</Typography>
+                                    </MenuItem>
+                                    <MenuItem key={""} onClick={handleLogout}>
+                                        <Typography textAlign="center">Logout</Typography>
+                                    </MenuItem>
+                                </>
+                            ) : (
+                                <div>
+                                    <MenuItem key={""} onClick={handleLogin}>
+                                        <Typography textAlign="center">Login</Typography>
+                                    </MenuItem>
+                                    <MenuItem key={""} onClick={handleSignUp}>
+                                        <Typography textAlign="center">Sign up</Typography>
+                                    </MenuItem>
+                                </div>
+                            )}
                         </Menu>
                     </Box>
                 </Toolbar>

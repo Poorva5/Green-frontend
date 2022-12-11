@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { styled } from "@mui/material";
 import { Link } from "react-router-dom";
+import { LoginUser } from "../../store/auth";
 
 export const StyledFormGroup = styled("div")`
   width: 100% ;
@@ -58,12 +59,13 @@ const LoginForm = () => {
         resolver: yupResolver(schema),
     });
 
-    const { isLoading } = useSelector((state) => state.auth);
-
     const dispatch = useDispatch()
+
+    const { isLoading } = useSelector((state) => state.auth);
 
     const onSubmit = data => {
         console.log(data)
+        dispatch(LoginUser(data))
     };
 
     return (
